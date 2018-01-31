@@ -1,0 +1,56 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTFILESIZE=99999999
+HISTSIZE=99999999
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+export DOTFILES=~/dotfiles
+
+# Remove an entry from $PATH
+# Based on http://stackoverflow.com/a/2108540/142339
+function path_remove() {
+  local arg path
+  path=":$PATH:"
+  for arg in "$@"; do path="${path//:$arg:/:}"; done
+  path="${path%:}"
+  path="${path#:}"
+  echo "$path"
+}
+
+# Source all files in "source"
+function src() {
+  local file
+  if [[ "$1" ]]; then
+    source "$DOTFILES/source/$1.sh"
+  else
+    for file in $DOTFILES/source/*; do
+      source "$file"
+    done
+  fi
+}
+
+src
