@@ -1,0 +1,173 @@
+" includes
+source ~/.vimrc_dev
+
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ervandew/supertab'
+Plug 'nanotech/jellybeans.vim'
+Plug 'vim-airline/vim-airline'
+"Plug 'altercation/vim-colors-solarized'
+
+call plug#end()
+
+
+" essentials
+filetype plugin indent on       " Enable file type support
+set encoding=utf-8              " UTF-8 encoding
+set binary                      " Enable binary support
+set hidden                      " Hide buffers
+set showcmd                     " Show current command
+set showmode                    " Show current mode
+set autoread                    " Auto reload
+set ttyfast                     " Fast terminal
+set ruler                       " Show ruler
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+set nofoldenable                " disable folding
+set laststatus=2                " Alwasy display statusline
+
+
+" Indentation
+set smarttab                    " Better tabs
+set smartindent                 " Inserts new level of indentation
+set autoindent                  " Copy indentation from previous line
+set tabstop=4                   " Columns a tab counts for
+set softtabstop=4               " Columns a tab inserts in insert mode
+set shiftwidth=4                " Columns inserted with the reindent operations
+set shiftround                  " Always indent by multiple of shiftwidth
+set expandtab                   " Always use spaces instead of tabs
+
+" Line Numbers
+set nu                          " Show line numbers
+"set rnu                        " Relative line numbers
+
+set colorcolumn=80,120          " Show ruler columns
+
+" Scrolling
+set scrolloff=3                 " Keep at least 3 lines above/below
+set sidescrolloff=3             " Keep at least 3 lines left/right
+
+" Cycle through buffers
+nnoremap <silent> <Tab> :bnext<CR>
+nnoremap <silent> <S-Tab> :bprevious<CR>
+
+" Close window
+nmap <silent> <Leader>wd <C-w>q
+
+" Close current buffer
+map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
+
+" using vim color schemes with putty
+" http://vim.wikia.com/wiki/Using_vim_color_schemes_with_Putty
+if &term =~ "xterm"
+  " 256 colors
+  let &t_Co = 256
+  " restore screen after quitting
+  let &t_ti = "\<Esc>7\<Esc>[r\<Esc>[?47h"
+  let &t_te = "\<Esc>[?47l\<Esc>8"
+  if has("terminfo")
+    let &t_Sf = "\<Esc>[3%p1%dm"
+    let &t_Sb = "\<Esc>[4%p1%dm"
+  else
+    let &t_Sf = "\<Esc>[3%dm"
+    let &t_Sb = "\<Esc>[4%dm"
+  endif
+endif
+
+
+"solarized
+syntax enable
+"set background=dark
+"colorscheme solarized
+colorscheme jellybeans
+
+" Tagbar
+nnoremap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus=0
+let g:tagbar_right=1
+let g:tagbar_width=35
+
+" NERDTree
+let g:NERDTreeIgnore=['\.job$', '^CVS$', '\.orig', '\~$']
+let g:NERDTreeShowHidden=1
+let g:NERDTreeStatusline="%f"
+let g:NERDTreeWinPos="left"
+let g:NERDTreeWinSize=35
+nnoremap <F9> :NERDTreeFind<CR>
+nnoremap <F10> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+autocmd VimEnter * if !argc() | NERDTree | endif
+        
+
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height=5
+
+let g:syntastic_javascript_checkers = ['standard']
+
+
+
+" ymc
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+ let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:ycm_extra_conf_globlist=['~/.vim/*']
+let g:ycm_always_populate_location_list = 0
+let g:ycm_auto_trigger=1
+let g:ycm_enable_diagnostic_highlighting=1
+let g:ycm_enable_diagnostic_signs=1
+let g:ycm_max_diagnostics_to_display=10000
+let g:ycm_min_num_identifier_candidate_chars=0
+let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_open_loclist_on_ycm_diags=1
+let g:ycm_show_diagnostics_ui=1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_filetype_blacklist={
+            \ 'vim' : 1,
+            \ 'tagbar' : 1,
+            \ 'qf' : 1,
+            \ 'notes' : 1,
+            \ 'markdown' : 1,
+            \ 'md' : 1,
+            \ 'unite' : 1,
+            \ 'text' : 1,
+            \ 'vimwiki' : 1,
+            \ 'pandoc' : 1,
+            \ 'infolog' : 1,
+            \ 'mail' : 1
+            \}
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+nnoremap <F12> :YcmDiags<CR>
+nnoremap <silent> <Leader>yd :YcmDiags<CR>
+nnoremap <silent> <Leader>fi :YcmCompleter FixIt<CR>
+nnoremap <silent> <Leader>gt :YcmCompleter GoTo<CR>
+
+"" enable omni completion
+""autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+
+" Airline
+"let g:airline_powerline_fonts=1
+"set guifont=Fira\ Mono\ Medium\ for\ Powerline:h9
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#fnamemod=':t'
