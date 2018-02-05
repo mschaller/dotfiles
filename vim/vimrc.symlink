@@ -33,7 +33,8 @@ set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 set nofoldenable                " disable folding
 set laststatus=2                " Alwasy display statusline
 set listchars=""                " vim-indentguides activates listchars
-
+"set cursorline                  " highlight the current line (slow via ssh)
+set colorcolumn=80,120          " Show ruler columns
 
 " Indentation
 set smarttab                    " Better tabs
@@ -47,13 +48,12 @@ set expandtab                   " Always use spaces instead of tabs
 
 " Line Numbers
 set nu                          " Show line numbers
-"set rnu                        " Relative line numbers
+nnoremap <F4> :set relativenumber!<CR>
 
 " Normal Mode Editing
 :nnoremap <space> i<space><esc><right>
 :nnoremap <cr> i<cr><esc><right>
 
-set colorcolumn=80,120          " Show ruler columns
 
 " Scrolling
 set scrolloff=3                 " Keep at least 3 lines above/below
@@ -63,8 +63,8 @@ set sidescrolloff=3             " Keep at least 3 lines left/right
 nnoremap <silent> <Tab> :bnext<CR>
 nnoremap <silent> <S-Tab> :bprevious<CR>
 
-" Close window
-nmap <silent> <Leader>wd <C-w>q
+" windows
+"nmap <silent> <Leader>wd <C-w>q
 
 " Close current buffer
 map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
@@ -105,8 +105,9 @@ let g:NERDTreeWinSize=35
 nnoremap <F9> :NERDTreeFind<CR>
 nnoremap <F10> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-autocmd VimEnter * if !argc() | NERDTree | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd VimEnter * if !argc() | NERDTree | endif
 
 
 
