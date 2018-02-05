@@ -1,3 +1,9 @@
+" auto-install Plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent execute "!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 
 " includes
@@ -8,7 +14,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ervandew/supertab'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
-"Plug 'altercation/vim-colors-solarized'
+Plug 'thaerkh/vim-indentguides'
 
 call plug#end()
 
@@ -26,6 +32,7 @@ set ruler                       " Show ruler
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 set nofoldenable                " disable folding
 set laststatus=2                " Alwasy display statusline
+set listchars=""                " vim-indentguides activates listchars
 
 
 " Indentation
@@ -79,11 +86,8 @@ if &term =~ "xterm"
   endif
 endif
 
-
-"solarized
+" jellybeans color scheme
 syntax enable
-"set background=dark
-"colorscheme solarized
 colorscheme jellybeans
 
 " Tagbar
@@ -103,11 +107,11 @@ nnoremap <F10> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 autocmd VimEnter * if !argc() | NERDTree | endif
-        
+
 
 
 " Airline
-"let g:airline_powerline_fonts=1
-"set guifont=Fira\ Mono\ Medium\ for\ Powerline:h9
+let g:airline_powerline_fonts=1
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h9
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#fnamemod=':t'
