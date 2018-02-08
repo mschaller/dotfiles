@@ -2,10 +2,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 Plug 'Chiel92/vim-autoformat'
-Plug 'w0rp/ale'
+
+if has('patch-8.0-1')   " equivalent to v:version == 800
+    Plug 'w0rp/ale'
+endif
+
 Plug 'embear/vim-localvimrc'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'Valloric/YouCompleteMe'
+
+if has('patch-7.4-1578') 
+    Plug 'Valloric/YouCompleteMe'
+endif
+
 Plug 'tpope/vim-surround'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'SirVer/ultisnips'
