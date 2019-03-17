@@ -10,15 +10,40 @@ endif
 Plug 'embear/vim-localvimrc'
 Plug 'jmcantrell/vim-virtualenv'
 
-if has('patch-7.4-1578') 
-    Plug 'Valloric/YouCompleteMe'
-endif
-
 Plug 'tpope/vim-surround'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+" Close deoplete preview window after completion
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['/usr/bin/pyls'],
+    \ }
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" NERDCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 
 " Tagbar
@@ -33,58 +58,6 @@ let g:virtualenv_auto_activate = 1
 " vim-localvimrc
 let g:localvimrc_persistent = 1  "re-/store only upper case (Y/N/A) decisions
 
-" ymc
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
- let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-" YouCompleteMe
-let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
-let g:ycm_extra_conf_globlist=['~/.vim/*']
-let g:ycm_always_populate_location_list = 0
-let g:ycm_auto_trigger=1
-let g:ycm_enable_diagnostic_highlighting=1
-let g:ycm_enable_diagnostic_signs=1
-let g:ycm_max_diagnostics_to_display=10000
-let g:ycm_min_num_identifier_candidate_chars=0
-let g:ycm_min_num_of_chars_for_completion=2
-let g:ycm_open_loclist_on_ycm_diags=1
-let g:ycm_show_diagnostics_ui=1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_filetype_blacklist={
-            \ 'vim' : 1,
-            \ 'tagbar' : 1,
-            \ 'qf' : 1,
-            \ 'notes' : 1,
-            \ 'markdown' : 1,
-            \ 'md' : 1,
-            \ 'unite' : 1,
-            \ 'text' : 1,
-            \ 'vimwiki' : 1,
-            \ 'pandoc' : 1,
-            \ 'infolog' : 1,
-            \ 'mail' : 1
-            \}
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-nnoremap <F12> :YcmDiags<CR>
-nnoremap <silent> <Leader>yd :YcmDiags<CR>
-nnoremap <silent> <Leader>fi :YcmCompleter FixIt<CR>
-nnoremap <silent> <Leader>gt :YcmCompleter GoTo<CR>
-
-"" enable omni completion
-""autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"

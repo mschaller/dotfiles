@@ -11,7 +11,8 @@ source ~/.vimrc_dev
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ervandew/supertab'
+Plug 'scrooloose/nerdcommenter'
+"Plug 'ervandew/supertab'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'thaerkh/vim-indentguides'
@@ -91,10 +92,10 @@ syntax enable
 colorscheme jellybeans
 
 " Tagbar
-nnoremap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus=0
-let g:tagbar_right=1
-let g:tagbar_width=35
+"nnoremap <F8> :TagbarToggle<CR>
+"let g:tagbar_autofocus=0
+"let g:tagbar_right=1
+"let g:tagbar_width=35
 
 " NERDTree
 let g:NERDTreeIgnore=['\.job$', '^CVS$', '\.orig', '\~$']
@@ -108,8 +109,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd VimEnter * if !argc() | NERDTree | endif
-
-
 
 " Airline
 let g:airline_powerline_fonts=1
