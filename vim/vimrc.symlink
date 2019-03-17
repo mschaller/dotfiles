@@ -115,3 +115,9 @@ let g:airline_powerline_fonts=1
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h9
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#fnamemod=':t'
+
+" Remember Position
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
