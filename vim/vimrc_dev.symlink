@@ -16,15 +16,25 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'ncm2/ncm2'  
+  Plug 'roxma/nvim-yarp'
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
+  "Plug 'Shougo/deoplete.nvim'
+  Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-let g:deoplete#enable_at_startup = 1
-" Close deoplete preview window after completion
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" let g:deoplete#enable_at_startup = 1
+" " Close deoplete preview window after completion
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -33,9 +43,17 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
+let g:LanguageClient_rootMarkers = {
+    \ 'go': ['.git', 'go.mod'],
+    \ }
+
 let g:LanguageClient_serverCommands = {
     \ 'python': ['/usr/bin/pyls'],
+    \ 'go': ['~/go/bin/bingo'],
     \ }
+let g:LanguageClient_autoStart = 1
+
+
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 

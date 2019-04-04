@@ -873,8 +873,8 @@
     <application name="chromium">
       <decor>no</decor>
     </application>
-    <application class="Firefox">
-      <decor>no</decor>
-    </application>
+    <!-- <application class="Firefox"> -->
+    <!--   <decor>no</decor> -->
+    <!-- </application> -->
   </applications>
 </openbox_config>
