@@ -11,6 +11,7 @@ command_exists git || {
 }
 
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-cp ~/.zshrc ~/.zshrc.orig
-cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+#cp ~/.zshrc ~/.zshrc.orig
+#cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+ln -s ~/dotfiles/zsh/swed.zsh-theme ~/.oh-my-zsh/themes/swed.zsh-theme
 chsh -s /bin/zsh
