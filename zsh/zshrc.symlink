@@ -98,3 +98,25 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 ZLE_RPROMPT_INDENT=1
+
+export DOTFILES=~/dotfiles
+
+# Source all files in "source"
+function src() {
+  local file
+  if [[ "$1" ]]; then
+    source "$DOTFILES/source/$1.sh"
+  else
+    for file in $DOTFILES/source/*; do
+      source "$file"
+    done
+  fi
+
+  # remove duplicates in PATH
+  # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
+  typeset -aU path
+}
+
+src
+
+#source /usr/share/shellbuddy/zsh_include.sh
