@@ -1,0 +1,9 @@
+#!/bin/bash
+i="0"
+while [ $i -lt 10 ]; do
+    xdotool mousemove 3500 400 click --repeat 80 --delay 60 1 &
+    sleep 3
+    i=$[$i+1]
+done
+
+echo "Ran the clicks 30 seconds"
