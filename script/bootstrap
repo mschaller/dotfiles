@@ -135,7 +135,7 @@ install_configfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  if [ ! -d "~/.config" ]
+  if [ ! -d ~/.config ]
   then
     info 'creating .config'
     mkdir ~/.config
