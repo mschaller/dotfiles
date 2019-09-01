@@ -135,6 +135,12 @@ install_configfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
+  if [ ! -d "~/.config" ]
+  then
+    info 'creating .config'
+    mkdir ~/.config
+  fi
+
   for src in $(find -H "$DOTFILES_ROOT/config" -mindepth 1 -maxdepth 1 -type d)
   do
       dst="$HOME/.config/$(basename "${src%.*}")"
