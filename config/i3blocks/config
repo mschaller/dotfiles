@@ -1,0 +1,53 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+command=$HOME/.config/i3blocks/blocks/$BLOCK_NAME
+separator=true
+separator_block_width=15
+
+[cpu]
+label=
+#label=CPU:
+interval=1
+
+[memory]
+label=
+#label=MEM:
+interval=1
+
+[temperature]
+# 
+label=TEMP:
+interval=10
+SENSOR_CHIP=coretemp-isa-0000
+
+[bandwidth]
+label=▼
+instance=enp3s0;in
+interval=1
+
+[bandwidth]
+label=▲
+instance=enp3s0;out
+interval=1
+
+[space]
+label=
+#label=/ 
+interval=60
+
+[audio]
+#
+label=SND: 
+interval=1
+
+[time]
+label=
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
