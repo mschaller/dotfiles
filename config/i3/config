@@ -10,7 +10,8 @@ set $alt Mod1
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 10
  
-default_border pixel 3
+default_border normal 3
+
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -194,6 +195,8 @@ bar {
 focus_follows_mouse no
 bindsym $alt+Tab exec rofi -show window
 
+bindsym $mod+c exec chromium
+
 bindsym --release button2 kill
 
 bindsym Print exec flameshot gui
@@ -206,9 +209,12 @@ workspace $ws2 output secondary
 
 #startup
 # menutray - https://github.com/trizen/menutray 
+exec --no-startup-id feh --bg-scale $HOME/dotfiles/wallpaper/0001.jpg
 exec --no-startup-id nm-applet
 exec --no-startup-id menutray -i
 exec --no-startup-id flameshot
 exec --no-startup-id seafile-applet
 exec --no-startup-id pidgin
+exec --no-startup-id numlockx on
+
 
