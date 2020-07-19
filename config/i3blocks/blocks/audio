@@ -16,11 +16,18 @@ status=$(echo "${statusLine}" | grep -wo "on")
 volume=$(echo "${statusLine}" | awk -F ' ' '{print $5}' | tr -d '[]%')
 
 if [[ "${status}" == "on" ]]; then
-  echo "${volume}%"
-  echo "${volume}%"
-  echo ""
+    if [[ $volume -ge 60 ]]; then
+        printf "&#xf028; %d%%\n" $volume
+    elif [[ $volume -ge 30 ]]; then
+        printf "&#xf027; %d%%\n" $volume
+    else
+        printf "&#xf026; %d%%\n" $volume
+    fi
+
+    printf "vol: %d\n" $volume
+    printf "\n"    
 else
-  echo "off"
-  echo "off"
+  echo "&#xf6a9; off"
+  echo "vol: off"
   echo ""
 fi

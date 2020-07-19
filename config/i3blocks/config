@@ -11,6 +11,12 @@ command=$HOME/.config/i3blocks/blocks/$BLOCK_NAME
 separator=true
 separator_block_width=15
 
+#[test]
+#label=&#xf5d2;
+#command=$HOME/dotfiles/config/i3blocks/test
+#interval=5
+#markup=pango
+
 [cpu]
 label=
 #label=CPU:
@@ -22,7 +28,7 @@ label=
 interval=1
 
 [temperature]
-# 
+#  
 label=TEMP:
 interval=10
 SENSOR_CHIP=coretemp-isa-0000
@@ -43,9 +49,8 @@ label=
 interval=60
 
 [audio]
-#
-label=SND: 
 interval=1
+markup=pango
 
 [time]
 label=
