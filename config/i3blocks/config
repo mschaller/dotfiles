@@ -48,6 +48,20 @@ label=
 #label=/ 
 interval=60
 
+[brightness]
+label=BB
+interval=1
+
+[battery]
+label=B1:
+instance=0
+interval=10
+
+[battery]
+label=B2:
+instance=1
+interval=10
+
 [audio]
 interval=1
 markup=pango
