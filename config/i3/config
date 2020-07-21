@@ -12,6 +12,10 @@ font pango:DejaVu Sans Mono 10
  
 default_border normal 3
 
+# setup screens
+exec --no-startup-id $HOME/.config/i3/initscreens.sh
+
+
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -93,18 +97,27 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: "
-set $ws2 "2: "
-set $ws3 "3"
+set $ws1 "1: &#xf120;"
+set $ws2 "2: &#xf4b8;"
+set $ws3 "3: &#xf121;"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws8 "8: notes"
+set $ws9 "9: misc"
+set $ws10 "10: misc"
+
+workspace $ws1 output primary
+workspace $ws2 output secondary
+workspace $ws3 output primary
+workspace $ws4 output secondary
+workspace $ws5 output primary
+workspace $ws6 output secondary
+workspace $ws7 output primary
+workspace $ws8 output secondary
+workspace $ws9 output primary
+workspace $ws10 output secondary
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -185,7 +198,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    font pango:DejaVu Sans Mono, FontAwesome 10 
+    font pango:DejaVu Sans Mono,FontAwesome 10 
     tray_output primary
     status_command i3blocks
     position top
@@ -201,10 +214,6 @@ bindsym --release button2 kill
 
 bindsym Print exec flameshot gui
 
-# setup screens
-exec --no-startup-id $HOME/.config/i3/initscreens.sh
-workspace $ws1 output primary
-workspace $ws2 output secondary
 
 
 #startup
@@ -217,4 +226,5 @@ exec --no-startup-id seafile-applet
 exec --no-startup-id pidgin
 exec --no-startup-id numlockx on
 
-
+for_window [class="Pidgin" window_role="buddy_list"] floating enable
+for_window [class="Seafile Client" title="Seafile"] floating enable
