@@ -1,0 +1,12 @@
+show_calendar = 1
+show_timezones = 1
+mark_today = 1
+show_week_numbers = 1
+close_on_unfocus = 1
+external_viewer = 
+clock_format = %a %d %b %H:%M
+force_lang = en_US.utf8
+clock_label = UTC
+clock_tz = :UTC
+clock_label = Local
+clock_tz =
