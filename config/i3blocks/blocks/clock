@@ -1,0 +1,28 @@
+#!/bin/bash
+
+date=$(date +%Y-%m-%d)
+time=$(date +%H:%M)
+dattr=""
+tattr=""
+ecode=0
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  gsimplecal
+fi
+
+if [[ "$time" > "23:00" ]] || [[ "$time" < "01:01" ]]; then
+    tattr="color='#ff6600'"
+elif [[ "$time" > "01:00" ]] && [[ "$time" < "02:01" ]]; then
+    tattr="color='#ff0000'"
+elif [[ "$time" > "02:00" ]] && [[ "$time" < "06:00" ]]; then
+    ecode=33
+fi
+
+echo "<span $dattr>$date</span> <span $tattr>$time</span>"
+echo "<span $tattr>$time</span>"
+echo ""
+
+
+
+exit $ecode
