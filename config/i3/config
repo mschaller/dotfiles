@@ -227,4 +227,7 @@ exec --no-startup-id pidgin
 exec --no-startup-id numlockx on
 
 for_window [class="Pidgin" window_role="buddy_list"] floating enable
+assign [class="Pidgin" window_role="buddy_list"] $ws2
+assign [class="Pidgin" window_role="conversation"] $ws2
+assign [class="TeamSpeak 3"] $ws2
 for_window [class="Seafile Client" title="Seafile"] floating enable
