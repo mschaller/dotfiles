@@ -3,6 +3,11 @@
 # One of the following: xrandr, xbacklight, kernel
 METHOD="xbacklight"
 
+if ! command -v "$METHOD" &> /dev/null
+then
+    exit 1
+fi
+
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
   xbacklight -inc 5
