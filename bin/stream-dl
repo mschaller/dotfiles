@@ -2,16 +2,42 @@
 
 ERRCNT=0
 
+
 while true;
 do
-    youtube-dl $1
-    echo $?
-    ERRCNT=$((ERRCNT+1))
-
-    if [ $ERRCNT -eq "30" ];
-    then
-        break
-    else
-        sleep 20
+    if [ $ERRCNT -eq 0 ];
+    then 
+        printf "watching for stream @ $1"
     fi
+    
+    youtube-dl --skip-download $1 2>/dev/null 1>/dev/null
+    if [ $? -eq 0 ];
+    then
+        printf "stream online - entering download loop\n"
+        ERRCNT=0
+        while [ $ERRCNT -lt 100 ];
+        do
+            printf "try to fetch stream...\n"
+            youtube-dl --no-part --skip-unavailable-fragments --hls-use-mpegts --external-downloader wget $1 
+            printf "process stopped; waiting 30s... (exit: %d) (iter: %d)" $? $ERRCNT
+            sleep 30
+            printf "\n"
+            ERRCNT=$((ERRCNT+1))
+        done
+        echo "stream offline - entering passive mode\n"
+        ERRCNT=0
+    fi
+
+    
+    if [ $ERRCNT -eq 11 ];
+    then
+        ERRCNT=0
+        printf "\n"
+    else
+        ERRCNT=$((ERRCNT+1))
+        printf "."
+    fi
+
+    # wait 1 min...
+    sleep 60
 done
