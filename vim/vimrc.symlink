@@ -49,12 +49,13 @@ set expandtab                   " Always use spaces instead of tabs
 
 " Line Numbers
 set nu                          " Show line numbers
+
+nnoremap <F3> :set hlsearch!<CR> " toogle search highlighting
 nnoremap <F4> :set relativenumber!<CR>
 
 " Normal Mode Editing
-:nnoremap <space> i<space><esc><right>
-:nnoremap <cr> i<cr><esc><right>
-
+":nnoremap <space> i<space><esc><right>
+":nnoremap <cr> i<cr><esc><right>
 
 " Scrolling
 set scrolloff=3                 " Keep at least 3 lines above/below
@@ -66,9 +67,6 @@ nnoremap <silent> <S-Tab> :bprevious<CR>
 
 " windows
 "nmap <silent> <Leader>wd <C-w>q
-
-" Close current buffer
-map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " using vim color schemes with putty
 " http://vim.wikia.com/wiki/Using_vim_color_schemes_with_Putty
@@ -91,18 +89,13 @@ endif
 syntax enable
 colorscheme jellybeans
 
-" Tagbar
-"nnoremap <F8> :TagbarToggle<CR>
-"let g:tagbar_autofocus=0
-"let g:tagbar_right=1
-"let g:tagbar_width=35
-
 " NERDTree
 let g:NERDTreeIgnore=['\.job$', '^CVS$', '\.orig', '\~$']
 let g:NERDTreeShowHidden=1
 let g:NERDTreeStatusline="%f"
 let g:NERDTreeWinPos="left"
 let g:NERDTreeWinSize=35
+let g:NERDTreeQuitOnOpen=1
 nnoremap <F9> :NERDTreeFind<CR>
 nnoremap <F10> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
