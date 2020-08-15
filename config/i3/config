@@ -232,4 +232,5 @@ assign [class="Pidgin" window_role="buddy_list"] $ws2
 assign [class="Pidgin" window_role="conversation"] $ws2
 assign [class="TeamSpeak 3"] $ws2
 for_window [class="Seafile Client" title="Seafile"] floating enable
+for_window [class="KeePass2"] floating enable
 assign [class="Cherrytree"] $ws8
