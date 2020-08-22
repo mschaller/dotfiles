@@ -16,6 +16,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'thaerkh/vim-indentguides'
+Plug 'liuchengxu/vim-which-key'
 
 call plug#end()
 
@@ -56,6 +57,10 @@ nnoremap <F4> :set relativenumber!<CR>
 " Normal Mode Editing
 ":nnoremap <space> i<space><esc><right>
 ":nnoremap <cr> i<cr><esc><right>
+
+" Which Key
+source $HOME/.config/nvim/whichkey.vim
+"nnoremap <silent> <leader> :WhichKey '\'<CR>
 
 " Scrolling
 set scrolloff=3                 " Keep at least 3 lines above/below

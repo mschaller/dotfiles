@@ -23,7 +23,7 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " Tagbar
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarOpen jc<CR>
 let g:tagbar_autofocus=1
 let g:tagbar_right=1
 let g:tagbar_width=35
