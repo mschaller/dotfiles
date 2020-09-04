@@ -105,7 +105,7 @@ set $ws3 "3: &#xf121;"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
-set $ws7 "7"
+set $ws7 "7: &#xf11b;"
 set $ws8 "8: notes"
 set $ws9 "9: misc"
 set $ws10 "10: misc"
@@ -209,7 +209,7 @@ bar {
 focus_follows_mouse no
 bindsym $alt+Tab exec rofi -show window
 
-bindsym $mod+c exec chromium
+bindsym $mod+c exec vivaldi-stable
 
 bindsym --release button2 kill
 
@@ -226,6 +226,7 @@ exec --no-startup-id flameshot
 exec --no-startup-id seafile-applet
 exec --no-startup-id pidgin
 exec --no-startup-id numlockx on
+exec --no-startup-id pasystray
 
 for_window [class="Pidgin" window_role="buddy_list"] floating enable
 assign [class="Pidgin" window_role="buddy_list"] $ws2
