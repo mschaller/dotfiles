@@ -141,9 +141,17 @@ install_configfiles () {
     mkdir ~/.config
   fi
 
+  # symlink folders
   for src in $(find -H "$DOTFILES_ROOT/config" -mindepth 1 -maxdepth 1 -type d)
   do
-      dst="$HOME/.config/$(basename "${src%.*}")"
+      dst="$HOME/.config/$(basename "$src")"
+      link_file "$src" "$dst"
+  done
+
+  # symlink files in $DOTFILES_ROOT/config
+  for src in $(find -H "$DOTFILES_ROOT/config" -maxdepth 1 -type f)
+  do
+      dst="$HOME/.config/$(basename "$src")"
       link_file "$src" "$dst"
   done
 }
