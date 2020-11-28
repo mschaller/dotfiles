@@ -1,5 +1,4 @@
-URxvt.termName: xterm-256color
-!!URxvt.termName: rxvt-unicode
+URxvt.termName: rxvt-unicode-256color
 URxvt.background: black
 URxvt.foreground: gray
 URxvt.font: xft:Hack:pixelsize=13:antialias=true:hinting=true,\
