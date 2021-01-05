@@ -212,6 +212,7 @@ bindsym $alt+Tab exec rofi -show window
 bindsym $mod+c exec vivaldi-stable
 
 bindsym --release button2 kill
+bindsym Mod1+F4 kill
 
 bindsym Print exec flameshot gui
 bindsym $mod+$alt+i exec i3-nagbar -m "`xdotool getwindowfocus getwindowname`"
