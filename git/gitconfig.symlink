@@ -9,7 +9,7 @@
         ui = true
 
 [core]
-        excludesfile = ~/.gitignore
+	excludesfile = /home/kaputtnik/.gitignore_global
         editor = vim
 
 [help]

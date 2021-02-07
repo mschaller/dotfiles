@@ -156,7 +156,7 @@ install_configfiles () {
   done
 }
 
-#setup_gitconfig
+setup_gitconfig
 install_dotfiles
 install_configfiles
 
