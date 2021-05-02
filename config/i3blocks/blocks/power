@@ -1,0 +1,106 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+    INTERFACE="BAT0"
+else
+    INTERFACE="$1"
+fi
+
+if [ -z "$2" ]
+then
+    TAG="BAT0"
+else
+    TAG="$2"
+fi
+
+if [ -z "$3" ]
+then
+    ACT="none"
+else
+    ACT="$3"
+fi
+
+STATE="none"
+
+if [ -e /sys/class/power_supply/$INTERFACE/uevent ]
+then
+    POWER_SUPPLY_STATUS=$(grep POWER_SUPPLY_STATUS\= /sys/class/power_supply/$INTERFACE/uevent | awk 'BEGIN { FS = "=" } { print $2 }')
+    POWER_SUPPLY_ENERGY_NOW=$(grep POWER_SUPPLY_CHARGE_NOW\= /sys/class/power_supply/$INTERFACE/uevent | awk 'BEGIN { FS = "=" } { print $2 }')
+    POWER_SUPPLY_ENERGY_FULL=$(grep POWER_SUPPLY_CHARGE_FULL\= /sys/class/power_supply/$INTERFACE/uevent | awk 'BEGIN { FS = "=" } { print $2 }')
+    POWER_SUPPLY_VOLTAGE_NOW=$(grep POWER_SUPPLY_VOLTAGE_NOW\= /sys/class/power_supply/$INTERFACE/uevent | awk 'BEGIN { FS = "=" } { print $2 }')
+    POWER_SUPPLY_POWER_NOW=$(grep POWER_SUPPLY_CURRENT_NOW\= /sys/class/power_supply/$INTERFACE/uevent | awk 'BEGIN { FS = "=" } { print $2 }')
+
+    # calc percentage remaining
+    PERCENTAGE_REMAINING=$(awk -v remaining=$POWER_SUPPLY_ENERGY_NOW -v full_design=$POWER_SUPPLY_ENERGY_FULL 'BEGIN { printf "%.0f",remaining / full_design * 100 }')
+    if (( $PERCENTAGE_REMAINING > 100 ))
+    then
+        PERCENTAGE_REMAINING=100
+    fi
+
+    # get present rate
+    VOLTAGE_NOW=$(awk -v voltage_now=$POWER_SUPPLY_VOLTAGE_NOW 'BEGIN { printf "%.2f",voltage_now / 1000000 }')
+    POWER_RATE=$(awk -v power_rate=$POWER_SUPPLY_POWER_NOW 'BEGIN { printf "%.2f",power_rate / 1000000 }')
+    PRESENT_RATE=$(awk -v power_rate=$POWER_RATE -v voltage_now=$VOLTAGE_NOW 'BEGIN { printf "%.2f",power_rate * voltage_now }')
+
+    # calc remaining time
+    if (( $(echo "$PRESENT_RATE > 0" | bc -l) )) && [ "$POWER_SUPPLY_STATUS" != "Full" ]
+    then
+        if [ "$POWER_SUPPLY_STATUS" == "Charging" ]
+        then
+            TIME_REMAINING=$(awk -v full_design=$POWER_SUPPLY_ENERGY_FULL -v remaining=$POWER_SUPPLY_ENERGY_NOW -v present_rate=$POWER_SUPPLY_POWER_NOW 'BEGIN { printf "%.2f",(full_design - remaining) / present_rate }')
+        elif [ "$POWER_SUPPLY_STATUS" == "Discharging" ]
+        then
+            TIME_REMAINING=$(awk -v remaining=$POWER_SUPPLY_ENERGY_NOW -v present_rate=$POWER_SUPPLY_POWER_NOW 'BEGIN { printf "%.2f",remaining / present_rate }')
+        fi
+
+        SECONDS_REMAINING=$(awk -v time_remaining=$TIME_REMAINING 'BEGIN { printf "%.0f",time_remaining * 3600 }')
+        HOURS=$(awk -v seconds_remaining=$SECONDS_REMAINING 'BEGIN { printf "%.2i",seconds_remaining / 3600 }')
+        SECONDS=$(awk -v seconds_remaining=$SECONDS_REMAINING -v hours=$HOURS 'BEGIN { printf "%.2i",seconds_remaining - (hours * 3600) }')
+        MINUTES=$(awk -v seconds=$SECONDS 'BEGIN { printf "%.2i",seconds / 60 }')
+    fi
+else
+    exit 1
+fi
+
+COLOR="#00FF00"
+SYM="&#xf240;"
+if (( $PERCENTAGE_REMAINING < 6 ))
+then
+    COLOR="#FF0000"
+    SYM="&#xf244;"
+elif (( $PERCENTAGE_REMAINING < 20 ))
+then
+    COLOR="#FF0000"
+    SYM="&#xf243;"
+elif (( $PERCENTAGE_REMAINING < 50 ))
+then
+    COLOR="#FFAE00"
+    SYM="&#xf242;"
+elif (( $PERCENTAGE_REMAINING < 80 ))
+then
+    COLOR="#FFF600"
+    SYM="&#xf241;"
+fi
+
+if [ $POWER_SUPPLY_STATUS == "Discharging" ]
+then
+    OUTPUT_TEXT="$TAG: $SYM($HOURS:$MINUTES) (${PERCENTAGE_REMAINING}% ${PRESENT_RATE}W)"
+    if (( $PERCENTAGE_REMAINING < 6 ))
+    then
+        if [ "$ACT" != "none" ]
+        then
+            $($ACT)
+        fi
+    fi
+elif [ $POWER_SUPPLY_STATUS == "Charging" ]
+then
+    OUTPUT_TEXT="$TAG: &#xf0e7;-$SYM($HOURS:$MINUTES) (${PERCENTAGE_REMAINING}% ${PRESENT_RATE}W)"
+elif [ $POWER_SUPPLY_STATUS == "Full" ]
+then
+    OUTPUT_TEXT="$TAG: &#xf0e7;(${PERCENTAGE_REMAINING}%)"
+else
+    OUTPUT_TEXT="$TAG: &#xf0e7;(${PERCENTAGE_REMAINING}%)"
+fi
+
+echo "<span foreground=\"$COLOR\">$OUTPUT_TEXT</span>"

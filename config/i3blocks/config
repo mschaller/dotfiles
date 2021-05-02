@@ -52,6 +52,10 @@ interval=60
 label=BB
 interval=1
 
+[power]
+label=P:
+interval=1
+
 [battery]
 label=B1:
 instance=0
