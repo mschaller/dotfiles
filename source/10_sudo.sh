@@ -1,0 +1,1 @@
+alias blyat='sudo -i'
