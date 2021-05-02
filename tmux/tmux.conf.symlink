@@ -1,4 +1,8 @@
 set -g default-terminal "screen-256color"
 
+set -g mouse on
+
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+
 # ctrl-arrow keys for putty
-set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
+#set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
