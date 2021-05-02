@@ -22,7 +22,7 @@ pacman -S nodejs npm
 in nvim
 
 ```vim
-:CocInstall coc-snippets coc-sh coc-markdown coc-xml coc-json coc-yaml coc-actions
+:CocInstall coc-snippets coc-sh coc-markdownlint coc-xml coc-json coc-yaml coc-actions
 :CocInstall coc-go
 :CocInstall coc-java
 :CocInstall coc-html coc-css coc-cssmodules
