@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ytdl -o "$2%(title)s_%(id)s.%(ext)s" --restrict-filenames $1
