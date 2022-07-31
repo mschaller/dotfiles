@@ -1,12 +1,15 @@
 #!/bin/bash
 
-result=$(echo -e "[Cancel]\nLogout\nShutdown\nReboot\nSuspend\nHibernate\nHybrid-sleep\nSuspend-then-hibernate" | rofi -dmenu -i -p "Exit")
+result=$(echo -e "[Cancel]\nLogout\nShutdown\nReboot\nReboot-win\nSuspend\nHibernate\nHybrid-sleep\nSuspend-then-hibernate" | rofi -dmenu -i -p "Exit")
 
 if [[ $result = "Logout" ]]; then
     i3-msg exit
 elif [[ $result = "Shutdown" ]]; then
     systemctl poweroff
 elif [[ $result = "Reboot" ]]; then
+    systemctl reboot
+elif [[ $result = "Reboot-win" ]]; then
+    sudo /bin/efibootmgr -n 0001
     systemctl reboot
 elif [[ $result = "Suspend" ]]; then
     systemctl suspend
