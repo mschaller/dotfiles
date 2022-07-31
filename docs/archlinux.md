@@ -42,7 +42,7 @@ makepkg -si
 ## xorg-setup
 
 ```bash
-urxvt
+rxvt-unicode
 ```
 
 ### i3
