@@ -10,7 +10,7 @@ command_exists git || {
     exit 1
 }
 
-git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #cp ~/.zshrc ~/.zshrc.orig
 #cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 ln -s ~/dotfiles/zsh/swed.zsh-theme ~/.oh-my-zsh/themes/swed.zsh-theme
